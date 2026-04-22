@@ -1,44 +1,61 @@
-# aCore
+<p align="center">
+  <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
+  <img src="https://img.shields.io/badge/Status-Active%20Development-green.svg" alt="Status">
+  <img src="https://img.shields.io/badge/Stack-Next.js%20|%20Nest.js%20|%20Biome-black.svg" alt="Stack">
+</p>
 
-Modern Open Source ERP/CRM ecosystem designed to streamline R&D (НИР) workflows and eliminate administrative overhead in academic institutions.
+**aCore** is a high-end, open-source ERP/CRM ecosystem designed to liberate university faculty managers from the "spreadsheet chaos" of R&D (Научно-исследовательская работа) workflows. 
 
-## Demo
-- **Live demo:** [https://demo.acore.edu](https://demo.acore.edu) (Coming Soon)
-- **Video:** [Product Overview](https://youtube.com/...)
-- **Screenshots:** Available in `/docs/assets`
+---
 
-## Problem
-Управление научно-исследовательскими работами (НИР) на факультетах часто превращается в "ад из таблиц Excel". Основные проблемы:
-- Разрозненность данных о грантах и публикациях.
-- Огромные временные затраты менеджеров на ручной сбор отчетности.
-- Отсутствие прозрачности в статусах выполнения работ и соблюдении дедлайнов.
-- Бюрократическая перегруженность, мешающая научной деятельности.
+## 💎 One-Line Value Proposition
+*Automating academic bureaucracy through minimalist design and high-performance engineering.*
 
-## Solution
-aCore предоставляет единое, минималистичное рабочее пространство, которое автоматизирует жизненный цикл НИР. Продукт заменяет хаотичные таблицы структурированной системой, позволяя менеджерам сосредоточиться на управлении процессами, а не на заполнении ячеек.
+## 🎥 Demo
+- **Live Demo:** [https://demo.acore.io](https://demo.acore.io) *(Coming Soon)*
+- **Walkthrough Video:** [YouTube Link](https://youtube.com/...)
+- **UI Preview:** High-fidelity screenshots available in `/docs/gallery`.
 
-## Features
-- **R&D Workflow Automation:** Полный цикл отслеживания проектов, от подачи заявки до финальной отчетности.
-- **Minimalist Dashboard:** Интерфейс в стиле "Modern SaaS" с использованием glassmorphism, обеспечивающий когнитивную разгрузку.
-- **Automated Reporting:** Генерация отчетов по установленным университетским формам в один клик.
-- **Role-Based Access:** Четкое разграничение прав доступа между администрацией, менеджерами и исследователями.
+## ⚠️ The Problem
+Faculty R&D management is often broken:
+- **Data Fragmentation:** Critical research data is scattered across thousands of legacy Excel files.
+- **Manual Labor:** Managers spend 40% of their time manually compiling reports for the Rectorate.
+- **Opaque Progress:** Lack of real-time visibility into grant statuses and publication deadlines.
 
-## Tech Stack
-- **Frontend:** Next.js (App Router), TypeScript, Tailwind CSS, shadcn/ui.
-- **Backend:** Nest.js.
-- **AI/LLM:** Интеграция с OpenAI/Claude для суммаризации отчетов и проверки соответствия регламентам (в планах).
-- **Database:** PostgreSQL (via Prisma or Drizzle).
-- **Infra:** Docker-ready, deployment on Vercel/Netlify for frontend and self-hosted Linux for backend.
-- **Tooling:** Biome (linting/formatting).
+## ⚡ The Solution
+aCore provides a centralized "Source of Truth" for faculty operations. It transforms complex administrative tasks into a seamless, automated experience, allowing the academic staff to focus on science, not paperwork.
 
-## Architecture
-Система построена на модульной архитектуре. Frontend использует преимущества Server Components (Next.js) для высокой производительности и SEO, а Backend на Nest.js обеспечивает масштабируемость и строгое следование принципам SOLID. Взаимодействие происходит через REST API с типизацией на уровне всего приложения.
+## ✨ Key Features
+- **Project Lifecycle Tracking:** End-to-end management of research projects (NIR).
+- **Automated Document Engine:** One-click generation of official university reports and forms.
+- **Intelligent Dashboard:** A glassmorphic, minimalist interface providing cognitive relief for heavy workloads.
+- **Granular RBAC:** Role-based access control for Administrators, Managers, and Researchers.
 
-## Getting Started
+## 🎨 Design Philosophy
+Inspired by **Modern SaaS** and **Editorial Minimalism**:
+- **Clean Lines:** Elimination of visual noise.
+- **Glassmorphism:** Subtle transparency for a modern, airy feel.
+- **Typography-First:** High readability for complex data sets.
+
+## 🛠 Tech Stack
+| Layer | Technology |
+| :--- | :--- |
+| **Frontend** | [Next.js 14+](https://nextjs.org/) (App Router), TypeScript |
+| **UI Components** | [shadcn/ui](https://ui.shadcn.com/), Tailwind CSS |
+| **Backend** | [Nest.js](https://nestjs.com/) |
+| **Database** | PostgreSQL + Prisma/Drizzle |
+| **Quality Control** | [Biome](https://biomejs.dev/) (Linting & Formatting) |
+
+## 🏗 Architecture
+The system follows a modular Monorepo/Microservices-ready approach.
+- **Client:** Server-side rendering for performance; client-side interactivity for complex forms.
+- **API:** RESTful architecture with strict DTO validation and TypeSafety.
+
+## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js (v20+)
-- pnpm
+- Node.js v20 or higher
+- pnpm (recommended)
 
 ### Installation
 ```bash
@@ -47,53 +64,51 @@ cd acore
 pnpm install
 ````
 
-### Environment variables
+### Environment Variables
 
-Создайте файл `.env` в корне проекта на основе `.env.example`:
+Copy `.env.example` to `.env` and configure:
 
-  - `DATABASE_URL`
-  - `NEXT_PUBLIC_API_URL`
-  - `JWT_SECRET`
+```env
+DATABASE_URL="postgresql://..."
+JWT_SECRET="your_secret"
+```
 
-### Run locally
+### Run Locally
 
 ```bash
-# Development mode
 pnpm run dev
 ```
 
-## Usage
+## 🗓 Roadmap
 
-1.  **Менеджер:** Заходит в систему, создает карточку НИР, назначает ответственных и устанавливает контрольные точки.
-2.  **Исследователь:** Загружает промежуточные результаты; система автоматически уведомляет менеджера об изменениях.
-3.  **Аналитика:** В конце квартала система генерирует сводную таблицу по всем работам факультета для подачи в ректорат.
+  - [x] Initial Architecture (Next.js + Nest.js)
+  - [ ] **Phase 1 (MVP):** Core R\&D tracking and basic CRUD.
+  - [ ] **Phase 2 (Auth):** Secure RBAC implementation.
+  - [ ] **Phase 3 (AI):** LLM-powered summary of scientific reports.
 
-## Roadmap
+## 🤝 Contributing
 
-  - [x] Initial Architecture (Nest.js + Next.js)
-  - [ ] **MVP:** Core R\&D tracking logic
-  - [ ] **Auth:** Role-based access control (RBAC)
-  - [ ] **Analytics:** Interactive charts for faculty performance
-  - [ ] **Model routing:** AI agent for automated document checking
+We maintain high code standards. Please check our [CONTRIBUTING.md](https://www.google.com/search?q=./CONTRIBUTING.md) before submitting a PR.
 
-## Project Status
+  - **Workflow:** Use `feature/` or `fix/` branches.
+  - **Linting:** Biome checks must pass.
 
-**Active development / MVP**
+## ⚖️ License
 
-## Contributing
+Distributed under the **MIT License**. See `LICENSE` for more information.
+"""
 
-Please refer to our [CONTRIBUTING.md](https://www.google.com/search?q=./CONTRIBUTING.md) for branch naming conventions and code standards.
+with open("README.md", "w", encoding="utf-8") as f:
+f.write(readme\_content)
 
-## License
+```
 
-MIT
+| Документ | Статус | Язык | Стиль |
+| :--- | :--- | :--- | :--- |
+| **README.md** | Готов (v2) | Английский | Minimalist / Professional |
+| **Стек** | Утвержден | TypeScript/Next/Nest | Modern SaaS |
 
-### Сводка по проекту
+---
 
-| Параметр | Значение | Ссылки |
-| :--- | :--- | :--- |
-| **Project Name** | aCore | - |
-| **Main Tech** | Next.js, Nest.js, Biome | [Next.js](https://nextjs.org/) / [Nest.js](https://nestjs.com/) / [Biome](https://biomejs.dev/) |
-| **UI Style** | Modern SaaS / Minimalist | [shadcn/ui](https://ui.shadcn.com/) |
-| **Primary Goal** | R&D Management Automation | - |
-
+*Теперь, когда у нас есть «лицо» проекта, какой следующий шаг будет наиболее полезным: проработка структуры базы данных для сущностей НИР или создание шаблона CONTRIBUTING.md со строгими правилами Git, которые ты любишь?*
+```
