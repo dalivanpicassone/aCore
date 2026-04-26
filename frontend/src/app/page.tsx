@@ -1,65 +1,142 @@
-import Image from "next/image";
+"use client";
+
+import { Plus } from "lucide-react";
+import { useMemo, useState } from "react";
+import { FilterBar } from "@/components/features/nir/filter-bar";
+import { ProjectList } from "@/components/features/nir/project-list";
+import type { NIR, StatusFilter } from "@/types/nir";
+
+const nir: NIR[] = [
+  {
+    id: "НИР-2026-01",
+    title: "Автоматизация учётных систем кафедры",
+    departmentHead: "Людмила Карпова",
+    status: "В работе",
+    lastUpdated: "24 апр. 2026",
+  },
+  {
+    id: "НИР-2026-02",
+    title: "Анализ эффективности методической работы",
+    departmentHead: "Наталья Семёнова",
+    status: "На согласовании",
+    lastUpdated: "22 апр. 2026",
+  },
+  {
+    id: "НИР-2026-03",
+    title: "Цифровизация документооборота факультета",
+    departmentHead: "Оксана Мирова",
+    status: "В работе",
+    lastUpdated: "21 апр. 2026",
+  },
+  {
+    id: "НИР-2026-04",
+    title: "Оптимизация планирования учебной нагрузки",
+    departmentHead: "Александр Дьяков",
+    status: "Завершено",
+    lastUpdated: "18 апр. 2026",
+  },
+  {
+    id: "НИР-2026-05",
+    title: "Мониторинг публикационной активности кафедр",
+    departmentHead: "Наталья Семёнова",
+    status: "На согласовании",
+    lastUpdated: "17 апр. 2026",
+  },
+  {
+    id: "НИР-2026-06",
+    title: "Разработка системы внутренней аттестации",
+    departmentHead: "Людмила Карпова",
+    status: "В работе",
+    lastUpdated: "15 апр. 2026",
+  },
+  {
+    id: "НИР-2026-07",
+    title: "Формирование реестра грантовых заявок",
+    departmentHead: "Александр Дьяков",
+    status: "Завершено",
+    lastUpdated: "10 апр. 2026",
+  },
+];
+
+const inWorkCount = nir.filter((n) => n.status === "В работе").length;
+const pendingCount = nir.filter((n) => n.status === "На согласовании").length;
+const doneCount = nir.filter((n) => n.status === "Завершено").length;
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>("Все");
+
+  const filteredNir = useMemo(
+    () =>
+      nir.filter((item) => {
+        const matchesStatus =
+          statusFilter === "Все" || item.status === statusFilter;
+        const q = searchQuery.toLowerCase().trim();
+        const matchesSearch =
+          !q ||
+          item.title.toLowerCase().includes(q) ||
+          item.departmentHead.toLowerCase().includes(q);
+        return matchesStatus && matchesSearch;
+      }),
+    [searchQuery, statusFilter],
+  );
+
+  const hasActiveFilters = searchQuery !== "" || statusFilter !== "Все";
+
+  function clearFilters() {
+    setSearchQuery("");
+    setStatusFilter("Все");
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="mx-auto w-full max-w-5xl px-10 py-10">
+      {/* Breadcrumbs */}
+      <nav className="mb-7 flex items-center gap-1.5 text-[13px]">
+        <span style={{ color: "#a39e98" }}>Факультет</span>
+        <span style={{ color: "#c8c3be" }}>/</span>
+        <span style={{ color: "#615d59" }}>Внутренние НИР</span>
+      </nav>
+
+      {/* Page header */}
+      <div className="mb-8 flex items-start justify-between">
+        <div>
+          <h1
+            className="text-[32px] font-bold leading-[1.2]"
+            style={{ color: "rgba(0,0,0,0.95)", letterSpacing: "-0.75px" }}
+          >
+            Текущие проекты НИР
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mt-2 text-[13px]" style={{ color: "#a39e98" }}>
+            {nir.length} проектов &middot; {inWorkCount} в работе &middot;{" "}
+            {pendingCount} на согласовании &middot; {doneCount} завершено
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+
+        <button
+          type="button"
+          className="flex shrink-0 items-center gap-1.5 rounded px-3 py-1.5 text-[13px] font-medium text-white transition-opacity hover:opacity-90 active:opacity-75"
+          style={{ backgroundColor: "#0075de" }}
+        >
+          <Plus size={13} strokeWidth={2.5} />
+          Создать НИР
+        </button>
+      </div>
+
+      <FilterBar
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        statusFilter={statusFilter}
+        setStatusFilter={setStatusFilter}
+      />
+
+      {/* Separator */}
+      <div className="my-4 border-t border-black/[0.08]" />
+
+      <ProjectList
+        projects={filteredNir}
+        hasActiveFilters={hasActiveFilters}
+        onClearFilters={clearFilters}
+      />
     </div>
   );
 }
